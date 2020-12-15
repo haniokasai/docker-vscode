@@ -17,7 +17,7 @@ RUN sed -i.bak -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/
  && apt-get update 
 
 # 必須なソフトのインストール
-RUN apt-get install -y curl apt-transport-https libgtk2.0-0 libxss1 libasound2 xauth x11-apps dbus git gpg \
+RUN apt-get install -y curl apt-transport-https libgtk2.0-0 libxss1 libasound2 xauth x11-apps dbus git gpg sudo\
  && mkdir /var/run/dbus
 
 # リポジトリの追加
@@ -45,12 +45,15 @@ RUN cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 /usr/share/code/ \
 RUN apt-get install -y ibus-mozc fontconfig dbus-x11 x11-xserver-utils fonts-takao-* language-pack-ja tzdata
  
 # 日本語の設定
+ENV LANG ja_JP.UTF-8
+ENV LC_CTYPE ja_JP.UTF-8
+
 RUN locale-gen ja_JP.UTF-8 \
  && update-locale LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 \
  && dpkg-reconfigure locales \
  && ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
- && dpkg-reconfigure tzdata 
-
+ && dpkg-reconfigure tzdata \
+ && localedef -f UTF-8 -i ja_JP ja_JP.utf8
 
 #お掃除
 RUN  apt-get clean
