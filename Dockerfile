@@ -17,11 +17,6 @@ ENV DefaultIMModule=fcitx
 RUN groupadd $GROUP\
  && useradd -m -G $GROUP $USER
 
-# リポジトリの追加
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
- && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
- && sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
- 
 # リポジトリを日本にして、アプデ
 RUN sed -i.bak -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive%g" /etc/apt/sources.list \
  && apt-get update 
@@ -30,8 +25,15 @@ RUN sed -i.bak -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/
 RUN apt-get install -y curl apt-transport-https libgtk2.0-0 libxss1 libasound2 xauth x11-apps dbus git gpg \
  && mkdir /var/run/dbus
 
+# リポジトリの追加
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
+ && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
+ && sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+ 
+
 # vscodeのインストール
-RUN apt-get install -y code\
+RUN apt-get update\
+ && apt-get install -y code\
  && apt-get install -f\
 
 # vscodeの設定
@@ -45,8 +47,7 @@ RUN cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 /usr/share/code/ \
 ##############################
 
 # 日本語のインストール
-RUN apt-get update \
- && apt-get install -y fcitx-mozc fontconfig dbus-x11 x11-xserver-utils fonts-takao-* language-pack-ja tzdata
+RUN apt-get install -y fcitx-mozc fontconfig dbus-x11 x11-xserver-utils fonts-takao-* language-pack-ja tzdata
  
 # 日本語の設定
 RUN  xset -r 49 \
