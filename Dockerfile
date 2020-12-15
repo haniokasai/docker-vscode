@@ -1,16 +1,12 @@
 FROM ubuntu
 
 ENV DISPLAY=10.0.75.1:0.0
-ENV USER=dev
-ENV GROUP=developers
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 ##############################
 # VScodeの設定               #
 ##############################
-RUN groupadd $GROUP\
- && useradd -m -G $GROUP $USER
 
 # リポジトリを日本にして、アプデ
 RUN sed -i.bak -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive%g" /etc/apt/sources.list \
@@ -57,11 +53,6 @@ RUN locale-gen ja_JP.UTF-8 \
 
 #お掃除
 RUN  apt-get clean
-
-
-USER $USER
-
-WORKDIR /home/$USER
 
 ENTRYPOINT /usr/bin/code --verbose
 
