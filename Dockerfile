@@ -34,7 +34,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > mic
 # vscodeのインストール
 RUN apt-get update\
  && apt-get install -y code\
- && apt-get install -f\
+ && apt-get install -f
 
 # vscodeの設定
 RUN cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 /usr/share/code/ \
