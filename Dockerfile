@@ -57,7 +57,7 @@ RUN  xset -r 49 \
  && update-locale LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 \
  && dpkg-reconfigure locales \
  && ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
- && dpkg-reconfigure tzdata \
+ && dpkg-reconfigure tzdata 
 
 
 #Ç®ë|èú
