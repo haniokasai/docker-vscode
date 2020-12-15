@@ -50,8 +50,7 @@ RUN cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 /usr/share/code/ \
 RUN apt-get install -y fcitx-mozc fontconfig dbus-x11 x11-xserver-utils fonts-takao-* language-pack-ja tzdata
  
 # ì˙ñ{åÍÇÃê›íË
-RUN  xset -r 49 \
- && im-config -n fcitx \ 
+RUN im-config -n fcitx \ 
  && set -o noclobber\
  && locale-gen ja_JP.UTF-8 \
  && update-locale LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 \
