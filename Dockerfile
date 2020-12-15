@@ -6,11 +6,6 @@ ENV GROUP=developers
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV GTK_IM_MODULE=xim
-ENV QT_IM_MODULE=fcitx
-ENV XMODIFIERS="@im=fcitx"
-ENV DefaultIMModule=fcitx
-
 ##############################
 # VScodeの設定               #
 ##############################
@@ -47,12 +42,10 @@ RUN cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 /usr/share/code/ \
 ##############################
 
 # 日本語のインストール
-RUN apt-get install -y fcitx-mozc fontconfig dbus-x11 x11-xserver-utils fonts-takao-* language-pack-ja tzdata
+RUN apt-get install -y ibus-mozc fontconfig dbus-x11 x11-xserver-utils fonts-takao-* language-pack-ja tzdata
  
 # 日本語の設定
-RUN im-config -n fcitx \ 
- && set -o noclobber\
- && locale-gen ja_JP.UTF-8 \
+RUN locale-gen ja_JP.UTF-8 \
  && update-locale LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 \
  && dpkg-reconfigure locales \
  && ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
