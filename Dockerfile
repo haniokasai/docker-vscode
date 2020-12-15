@@ -52,9 +52,10 @@ RUN locale-gen ja_JP.UTF-8 \
  && localedef -f UTF-8 -i ja_JP ja_JP.utf8
 
 #Ç®ë|èú
-RUN  apt-get clean
+RUN  apt-get clean\
+ && mkdir /workdir
 
-ENTRYPOINT /usr/bin/code --verbose
+ENTRYPOINT /usr/bin/code --user-data-dir /workdir --verbose 
 
 #Ref
 ##https://qiita.com/Tadahiro_Yamamura/items/0e198910d3efec503742
