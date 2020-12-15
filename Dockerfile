@@ -6,7 +6,7 @@ ENV GROUP=developers
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV GTK_IM_MODULE=fcitx
+ENV GTK_IM_MODULE=xim
 ENV QT_IM_MODULE=fcitx
 ENV XMODIFIERS="@im=fcitx"
 ENV DefaultIMModule=fcitx
